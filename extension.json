@@ -1,0 +1,36 @@
+{
+    "manifest_version":2,
+    "name":"FileApi",
+    "version":"0.1.0",
+    "author":[
+        "[https://github.com/simontaurus Simon Stier]"
+    ],
+    "url":"https://github.com/OpenSemanticLab/mediawiki-extensions-FileApi",
+    "descriptionmsg":"file-api-desc",
+    "namemsg":"file-api-name",
+    "license-name":"AGPL-3.0-or-later",
+    "type":"api",
+    "requires":{
+        "MediaWiki":">= 1.39"
+    },
+    "MessagesDirs":{
+        "FileApi":[
+            "i18n"
+        ]
+    },
+	"AutoloadClasses": {
+		"ApiDownload": "includes/api/Download.php",
+		"ApiFormatRawFile": "includes/api/ApiFormatRawFile.php"
+	},
+	"APIModules": {
+		"download": {
+			"class": "ApiDownload",
+			"services": [
+				"LanguageNameUtils",
+				"RepoGroup",
+				"MainWANObjectCache",
+				"WikiPageFactory"
+			]
+		}
+	}
+}

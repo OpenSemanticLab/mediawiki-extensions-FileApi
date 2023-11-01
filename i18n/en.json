@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Simon Stier"
+		]
+	},
+	"file-api-desc": "Implements file downloads via the action api for consumption by any client, including api-only clients (e. g. via bot password or OAuth)",
+	"file-api-name": "FileApi",
+	"apihelp-download-description": "Downloads a file stored in the file namespace through the action api",
+	"apihelp-download-summary": "Downloads a file stored in the file namespace through the action api",
+	"apihelp-download-param-title": "The media file title to retrieve",
+	"apihelp-download-param-pageid": "The pageid of the media file to retrieve",
+	"apihelp-download-example-1": "Fetch the file Example.ogv",
+	"apierror-download-notfound": "Requested language not found",
+	"apierror-download-notlocal": "File not local"
+
+}
