@@ -1,7 +1,7 @@
 {
     "manifest_version":2,
     "name":"FileApi",
-    "version":"0.1.0",
+    "version":"0.1.1",
     "author":[
         "[https://github.com/simontaurus Simon Stier]"
     ],
@@ -26,10 +26,7 @@
 		"download": {
 			"class": "ApiDownload",
 			"services": [
-				"LanguageNameUtils",
-				"RepoGroup",
-				"MainWANObjectCache",
-				"WikiPageFactory"
+				"RepoGroup"
 			]
 		}
 	}

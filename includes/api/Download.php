@@ -1,42 +1,16 @@
 <?php
-/**
- * Copyright © 2015 Derk-Jan Hartman "hartman.wiki@gmail.com"
- * Updated 2017-2019 Brion Vibber <bvibber@wikimedia.org>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- * http://www.gnu.org/copyleft/gpl.html
- *
- * @file
- * @since 1.33
- */
 
 use ApiBase;
 use ApiFormatRaw;
 use ApiMain;
 use ApiResult;
 use ApiUsageException;
-use File;
 use MediaWiki\Languages\LanguageNameUtils;
 use MediaWiki\Page\WikiPageFactory;
 use MWException;
 use RepoGroup;
-use TextContent;
-use Title;
 use WANObjectCache;
 use Wikimedia\ParamValidator\ParamValidator;
-use WikiPage;
 
 use ApiFormatRawFile;
 
@@ -50,23 +24,9 @@ use ApiFormatRawFile;
  * @emits error.code timedtext-notfound, invalidlang, invalid-title
  */
 class ApiDownload extends ApiBase {
-	/** @var LanguageNameUtils */
-	private $languageNameUtils;
 
 	/** @var RepoGroup */
 	private $repoGroup;
-
-	/** @var WANObjectCache */
-	private $cache;
-
-	/** @var WikiPageFactory */
-	private $wikiPageFactory;
-
-	/** @var int version of the cache format */
-	private const CACHE_VERSION = 1;
-
-	/** @var int default 24 hours */
-	private const CACHE_TTL = 86400;
 
 	/**
 	 * @param ApiMain $main
@@ -79,20 +39,14 @@ class ApiDownload extends ApiBase {
 	public function __construct(
 		ApiMain $main,
 		$action,
-		LanguageNameUtils $languageNameUtils,
-		RepoGroup $repoGroup,
-		WANObjectCache $cache,
-		WikiPageFactory $wikiPageFactory
+		RepoGroup $repoGroup
 	) {
 		parent::__construct( $main, $action );
-		$this->languageNameUtils = $languageNameUtils;
 		$this->repoGroup = $repoGroup;
-		$this->cache = $cache;
-		$this->wikiPageFactory = $wikiPageFactory;
 	}
 
 	/**
-	 * This module uses a raw printer to directly output SRT, VTT or other subtitle formats
+	 * This module uses a raw printer to directly output files
 	 *
 	 * @return ApiFormatRaw
 	 */
@@ -136,20 +90,9 @@ class ApiDownload extends ApiBase {
 
 		// get file system path
 		$filePath = $file->getRepo()->getLocalReference( $file->getVirtualUrl() )->getPath();
-		
-
-		// We want to cache our output
-		/* $this->getMain()->setCacheMode( 'public' );
-		if ( !$this->getMain()->getParameter( 'smaxage' ) ) {
-			// cache at least 15 seconds.
-			$this->getMain()->setCacheMaxAge( 15 );
-		}*/
 
 		$mimeType = $file->getMimeType();
 		$fileName = $file->getName();
-			// Unreachable due to parameter validation,
-			// unless someone adds a new format and forgets. :D
-			//throw new MWException( 'Unsupported timedtext trackformat' );
 
 		$result = $this->getResult();
 		$result->addValue( null, 'mime', $mimeType, ApiResult::NO_SIZE_CHECK );
