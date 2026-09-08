@@ -8,7 +8,7 @@
     "url":"https://github.com/OpenSemanticLab/mediawiki-extensions-FileApi",
     "descriptionmsg":"file-api-desc",
     "namemsg":"file-api-name",
-    "license-name":"AGPL-3.0-or-later",
+    "license-name":"Apache-2.0",
     "type":"api",
     "requires":{
         "MediaWiki":">= 1.39"
